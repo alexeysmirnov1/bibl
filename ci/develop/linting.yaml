@@ -1,0 +1,40 @@
+develop:pint:
+  image:
+    name: $CI_REGISTRY_IMAGE/base:unit
+    entrypoint: [ "" ]
+  stage: linting
+  extends: [ .develop_ci_rule_definition ]
+  before_script:
+    - ls
+  script:
+    - !reference [ .linting-pint-common, script ]
+
+#develop:larastan:
+#  image:
+#    name: $CI_REGISTRY_IMAGE/base:unit
+#    entrypoint: [ "" ]
+#  stage: linting
+#  extends: [ .develop_ci_rule_definition ]
+#  before_script:
+#    - ls
+#  script:
+#    - !reference [ .linting-larastan-common, script ]
+
+#develop:hadolint:
+#  image: hadolint/hadolint:latest
+#  stage: linting
+#  extends: [ .develop_ci_rule_definition ]
+#  before_script:
+#    - ls
+#  script:
+#    - !reference [ .linting-hadolint-common, script ]
+
+#develop:yamllint:
+#  image: python:3.9
+#  stage: linting
+#  extends: [ .develop_ci_rule_definition ]
+#  before_script:
+#    - ls
+#  script:
+#    - pip install yamllint
+#    - yamllint .gitlab-ci.yml

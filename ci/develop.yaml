@@ -1,0 +1,19 @@
+.develop_ci_rule_definition:
+  rules:
+    - if: $IMAGE_ROLLBACK_TAG_SHORT_SHA != null && $IMAGE_ROLLBACK_TAG_SHORT_SHA != ""
+      when: never
+    - if: $CI_PIPELINE_SOURCE != 'web' && $CI_COMMIT_BRANCH != "premaster" && $CI_COMMIT_BRANCH != "master"
+      when: always
+
+.develop_cd_rule_definition:
+  rules:
+    - if: $IMAGE_ROLLBACK_TAG_SHORT_SHA != null && $IMAGE_ROLLBACK_TAG_SHORT_SHA != ""
+      when: never
+    - if: $CI_PIPELINE_SOURCE == 'web' && $CI_COMMIT_BRANCH != "premaster" && $CI_COMMIT_BRANCH != "master"
+      when: always
+
+include:
+  - local: 'ci/develop/linting.yaml'
+  - local: 'ci/develop/tests.yaml'
+  - local: 'ci/develop/build.yaml'
+  - local: 'ci/develop/deploy.yaml'

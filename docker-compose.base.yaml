@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+
+### PHP + Unit ##############################################
+    unit:
+      container_name: ${COMPOSE_PROJECT_NAME}_unit_base
+      build:
+        args:
+          - NOVA_USERNAME=${NOVA_USERNAME}
+          - NOVA_LICENSE_KEY=${NOVA_LICENSE_KEY}
+          - PHP_VERSION=${PHP_VERSION}
+          - NODE_VERSION=${NODE_VERSION}
+        context: .
+        dockerfile: docker/base/Dockerfile_unit
+      image: ${IMAGE_REGISTRY_PATH}/${COMPOSE_PROJECT_NAME}/base:unit # образ, который строим. НЕ ТОТ из которого строимся
+      ports:
+        - "8080:8080"
+
+  ### PHP cli ##############################################
+    cli:
+      container_name: ${COMPOSE_PROJECT_NAME}_cli_base
+      build:
+        args:
+          - NOVA_USERNAME=${NOVA_USERNAME}
+          - NOVA_LICENSE_KEY=${NOVA_LICENSE_KEY}
+          - PHP_VERSION=${PHP_VERSION}
+        context: .
+        dockerfile: docker/base/Dockerfile_cli
+      image: ${IMAGE_REGISTRY_PATH}/${COMPOSE_PROJECT_NAME}/base:cli # образ, который строим. НЕ ТОТ из которого строимся

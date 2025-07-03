@@ -1,0 +1,81 @@
+{
+    "settings": {
+        "http": {
+            "header_read_timeout": 30,
+            "body_read_timeout": 30,
+            "send_timeout": 30,
+            "idle_timeout": 180,
+            "max_body_size": 200000000
+        }
+    },
+    "listeners": {
+        "*:8080": {
+            "pass": "routes"
+        }
+    },
+    "routes": [
+        {
+            "match": {
+                "uri": [
+                    "*.manifest",
+                    "*.appcache",
+                    "*.html",
+                    "*.json",
+                    "*.rss",
+                    "*.atom",
+                    "*.jpg",
+                    "*.jpeg",
+                    "*.gif",
+                    "*.png",
+                    "*.ico",
+                    "*.cur",
+                    "*.gz",
+                    "*.svg",
+                    "*.svgz",
+                    "*.mp4",
+                    "*.ogg",
+                    "*.ogv",
+                    "*.webm",
+                    "*.htc",
+                    "*.css",
+                    "*.js",
+                    "*.ttf",
+                    "*.ttc",
+                    "*.otf",
+                    "*.eot",
+                    "*.woff",
+                    "*.woff2",
+                    "/robots.txt"
+                ]
+            },
+            "action": {
+                "share": "/var/www/public$uri",
+                "response_headers": {
+                    "Cache-Control": "max-age=3600, s-maxage=3600"
+                }
+            }
+        },
+        {
+            "match": {
+                "uri": "!/index.php"
+            },
+            "action": {
+                "share": "/var/www/public$uri",
+                "fallback": {
+                    "pass": "applications/laravel"
+                }
+            }
+        }
+    ],
+    "applications": {
+        "laravel": {
+            "type": "php",
+            "root": "/var/www/public",
+            "script": "index.php"
+        }
+    },
+    "access_log": {
+        "path": "/dev/stdout",
+        "format": "{\"log_source\":\"unit\",\"message\":\"$request_line\",\"request_time\":\"$request_time\",\"level\":200,\"level_name\":\"INFO\",\"channel\":\"access_log\",\"datetime\":\"$time_local\",\"extra\":{\"url\":\"$uri\",\"ip\":\"$remote_addr\",\"http_method\":\"$method\",\"server\":\"$host\",\"referrer\":\"$header_referer\",\"user_agent\":\"$header_user_agent\",\"status\":\"$status\"}}"
+    }
+}

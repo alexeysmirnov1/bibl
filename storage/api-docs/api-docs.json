@@ -1,0 +1,4128 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Domoteka API",
+        "description": "Domoteka API Documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/complexes": {
+            "post": {
+                "tags": [
+                    "complex"
+                ],
+                "summary": "Список комплексов",
+                "operationId": "cd9b84bf6aafe5bae61e3ac5a86f3e9e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ComplexIndexRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComplexListing"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/complexes/{complex}": {
+            "get": {
+                "tags": [
+                    "complex"
+                ],
+                "summary": "Детальная информация о комплексе",
+                "operationId": "4986af95d27773c95664a2674fb9df0c",
+                "parameters": [
+                    {
+                        "name": "complex",
+                        "in": "path",
+                        "description": "id жилого комплекса",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DetailComplex"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/complexes/ids": {
+            "get": {
+                "tags": [
+                    "complex"
+                ],
+                "summary": "Список комплексов по id",
+                "operationId": "c8a2b33b1d7ae590174e0dd1b5c138d1",
+                "parameters": [
+                    {
+                        "name": "ids",
+                        "in": "query",
+                        "description": "ids жилого комплекса",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComplexIds"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/complexes/filters": {
+            "get": {
+                "tags": [
+                    "complex"
+                ],
+                "summary": "Список фильтров",
+                "operationId": "0b55fd601ea3b2f9963caf0c1a3cd13d",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComplexFilter"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/complexes/{complex}/events/{event}": {
+            "get": {
+                "tags": [
+                    "complex"
+                ],
+                "summary": "Детальная информация о новостей",
+                "operationId": "7ecb0132ef1eb76811986ca836858051",
+                "parameters": [
+                    {
+                        "name": "complex",
+                        "in": "path",
+                        "description": "id жилого комплекса",
+                        "required": true
+                    },
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "id новостей",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/complexEventDetail"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/complexes/maps": {
+            "get": {
+                "tags": [
+                    "complex"
+                ],
+                "summary": "Список на карте",
+                "operationId": "491ae02eac91ab7651cf7b9063238bf4",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlacemarkListing"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/complexes/maps/{id}": {
+            "get": {
+                "tags": [
+                    "complex"
+                ],
+                "summary": "Детальная информация",
+                "operationId": "f465eebda63dcfcbd6e8e429af1919fc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Номер страницы",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlacemarkDetail"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/rents/maps": {
+            "get": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Список маркеров на карте",
+                "operationId": "87be3fce6e1d821c8f71c7e3b50d81f6",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlacemarkRentFlatListing"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/rents/maps/{id}": {
+            "get": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Список квартир для аренды",
+                "operationId": "57521c1eeb682f93ba4682d82954a4b5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "страница"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlacemarkRentFlatMaps"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/sales/maps": {
+            "get": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Список маркеров на карте",
+                "operationId": "d6b6269c6630809ac932532110a672f4",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlacemarkSaleFlatListing"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/sales/maps/{id}": {
+            "get": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Список квартир для продаж",
+                "operationId": "77ee33f56d83048d6e2374195f1f71fe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "страница"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/buildingSaleFlatMaps"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/rents": {
+            "post": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Список квартир для аренды",
+                "operationId": "e1824dbf22e6b74eab95c90090eec23e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RentFlatListingRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RentFlatListing"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/rents/{rentFlat}": {
+            "get": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Детальная информация о квартире для аренды",
+                "operationId": "06007916d95dc9f3fe7459af013ff1d8",
+                "parameters": [
+                    {
+                        "name": "rentFlat",
+                        "in": "path",
+                        "description": "ID квартиры",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RentFlatDetail"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/rents/ids": {
+            "get": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Список квартир для аренды по ids",
+                "operationId": "7a4be141ba781780cf3bacb18e2ad6e3",
+                "parameters": [
+                    {
+                        "name": "ids",
+                        "in": "query",
+                        "description": "ids квартир для аренды",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RentFlatByListIds"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/rents/filters": {
+            "get": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Список фильтров квартир для аренды",
+                "operationId": "7de3abcdf9aadf5f129242848df8f204",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RentFlatFilterView"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/sales": {
+            "post": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Список квартир для покупки",
+                "operationId": "0e91ebfc5e5b1fcf3e5da8d22c618fa0",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SaleFlatIndexRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SaleFlatListing"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/sales/{saleFlat}": {
+            "get": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Список квартир для покупки",
+                "operationId": "2efbce861b890a645f65c8e4481e9e47",
+                "parameters": [
+                    {
+                        "name": "saleFlat",
+                        "in": "path",
+                        "description": "ID квартиры",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SaleFlatDetail"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/flats/sales/ids": {
+            "get": {
+                "tags": [
+                    "flats"
+                ],
+                "summary": "Список квартир для продажи по ids",
+                "operationId": "d497980d724053b9121db32de81211ce",
+                "parameters": [
+                    {
+                        "name": "ids",
+                        "in": "query",
+                        "description": "ids квартир для продажи",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SaleFlatByListIds"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/journal/categories": {
+            "get": {
+                "tags": [
+                    "journal"
+                ],
+                "summary": "Список категорий",
+                "operationId": "a5abb9df6d08344379373e9751c6e110",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IndexArticleCategory"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/journal/articles/{article}": {
+            "get": {
+                "tags": [
+                    "journal"
+                ],
+                "summary": "Статья по слагу",
+                "operationId": "b019197a3cf55664ff2fbec737236f20",
+                "parameters": [
+                    {
+                        "name": "article",
+                        "in": "path",
+                        "description": "Article slug",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShowArticle"
+                                },
+                                "examples": {
+                                    "Selection Flat": {
+                                        "summary": "выборка объектов квартир",
+                                        "value": {
+                                            "article": {
+                                                "title": "заголовок",
+                                                "slug": "slug",
+                                                "publishedAt": "1970-01-01T00:00:00.019Z",
+                                                "image": "https://example.com/public/image2.jpg",
+                                                "content": [
+                                                    {
+                                                        "type": "image",
+                                                        "url": "https://example.com/image.jpg",
+                                                        "fields": {
+                                                            "description": "Image description"
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "text",
+                                                        "value": {
+                                                            "title": "Text title",
+                                                            "text": "Text content"
+                                                        }
+                                                    }
+                                                ],
+                                                "category": {
+                                                    "title": "Заголовок категории",
+                                                    "slug": "slug"
+                                                },
+                                                "selection": {
+                                                    "type": "FLATS",
+                                                    "objects": [
+                                                        {
+                                                            "id": 123,
+                                                            "price": 98000000,
+                                                            "highEndLuxury": true,
+                                                            "images": [],
+                                                            "square": 64,
+                                                            "floor": 4,
+                                                            "rooms": 3,
+                                                            "floors": 5,
+                                                            "complex": {
+                                                                "id": 1,
+                                                                "title": "заголовок"
+                                                            },
+                                                            "metro": {
+                                                                "title": "Комсомольская",
+                                                                "timeToMetroOnFoot": 5,
+                                                                "timeToMetroOnTransport": 2
+                                                            },
+                                                            "titleDescription": "Уникальное предложение",
+                                                            "description": "описание",
+                                                            "type": "SALE",
+                                                            "address": "Тверской р-н, ул.Мосфильмовская, дом 1",
+                                                            "contact": {
+                                                                "phone": "79999999999",
+                                                                "whatsapp": "79999999999"
+                                                            },
+                                                            "discount": "95000000",
+                                                            "pricePerMeter": "950000",
+                                                            "isFavorite": true
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "Selection Complex": {
+                                        "summary": "выборка объектов ЖК",
+                                        "value": {
+                                            "article": {
+                                                "title": "заголовок",
+                                                "slug": "slug",
+                                                "publishedAt": "1970-01-01T00:00:00.019Z",
+                                                "image": "https://example.com/public/image2.jpg",
+                                                "content": [
+                                                    {
+                                                        "type": "image",
+                                                        "url": "https://example.com/public/image2.jpg",
+                                                        "fields": {
+                                                            "description": "Image description"
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "text",
+                                                        "value": {
+                                                            "title": "Text title",
+                                                            "text": "Text content"
+                                                        }
+                                                    }
+                                                ],
+                                                "category": {
+                                                    "title": "Заголовок категории",
+                                                    "slug": "slug"
+                                                },
+                                                "selection": {
+                                                    "type": "COMPLEXES",
+                                                    "objects": [
+                                                        {
+                                                            "id": 123,
+                                                            "title": "Заголовок ЖК",
+                                                            "images": [
+                                                                "https://example.com/public/image1.jpg",
+                                                                "https://example.com/public/image2.jpg"
+                                                            ],
+                                                            "metro": {
+                                                                "timeToMetroOnFoot": 5,
+                                                                "timeToMetroOnTransport": 2,
+                                                                "title": "комсомольская"
+                                                            },
+                                                            "flats": [
+                                                                {
+                                                                    "square": 54,
+                                                                    "rooms": 4,
+                                                                    "price": 98000000
+                                                                }
+                                                            ],
+                                                            "address": "Тверской р-н, ул.Мосфильмовская, дом 1",
+                                                            "contact": {
+                                                                "phone": "79999999999",
+                                                                "whatsapp": "79999999999"
+                                                            },
+                                                            "isFavorite": true,
+                                                            "developerFlatsCount": 5,
+                                                            "ownerFlatsCount": 10,
+                                                            "developer": {
+                                                                "name": "Developer name"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/journal/articles": {
+            "get": {
+                "tags": [
+                    "journal"
+                ],
+                "summary": "Список статей",
+                "operationId": "b51bc5e24bd4117ffd62fefdf86a0723",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Номер страницы",
+                        "required": false
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Количество элементов на странице",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IndexArticle"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/journal/categories/{category}/articles": {
+            "post": {
+                "tags": [
+                    "journal"
+                ],
+                "summary": "Список статей по категории",
+                "operationId": "0ea7a783360bc833725a2d96d74f0d0f",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "Category slug",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryArticleIndexRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CategoryArticleIndex"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/journal/news": {
+            "post": {
+                "tags": [
+                    "journal"
+                ],
+                "summary": "Список новостей",
+                "operationId": "5f4f7f558c35930d2bec43e282f296d6",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewsIndexRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IndexNews"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/journal/news/{news}": {
+            "get": {
+                "tags": [
+                    "journal"
+                ],
+                "summary": "Новость по слагу",
+                "operationId": "5d341aac9f5b74c06163919b65431790",
+                "parameters": [
+                    {
+                        "name": "news",
+                        "in": "path",
+                        "description": "News slug",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShowNews"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/v1/journal/tags/categories/{category}": {
+            "get": {
+                "tags": [
+                    "journal"
+                ],
+                "summary": "Список тегов категории",
+                "operationId": "c0d5b1641787103837bec85e2db3f6e2",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "Category slug",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TagArticleCategory"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/journal/tags/news": {
+            "get": {
+                "tags": [
+                    "journal"
+                ],
+                "summary": "Список тегов для новостей",
+                "operationId": "e3a55a5c8ab50591789a92bec4b5b87a",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TagNews"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/selections": {
+            "get": {
+                "tags": [
+                    "selection"
+                ],
+                "summary": "Список подборок",
+                "operationId": "32c47abfa3eda0ecc8f28e4d60046292",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IndexSelection"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/selections/{selection}": {
+            "get": {
+                "tags": [
+                    "selection"
+                ],
+                "summary": "Подборка объектов",
+                "operationId": "807d8dd4712c0440f1a2e8cd010f30b3",
+                "parameters": [
+                    {
+                        "name": "selection",
+                        "in": "path",
+                        "description": "ID подборки",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShowSelection"
+                                },
+                                "examples": {
+                                    "Selection Flat": {
+                                        "summary": "выборка объектов квартир",
+                                        "value": {
+                                            "selection": {
+                                                "id": 123,
+                                                "type": "FLATS",
+                                                "objects": [
+                                                    {
+                                                        "id": 123,
+                                                        "price": 98000000,
+                                                        "highEndLuxury": true,
+                                                        "images": [
+                                                            "https://example.com/public/image1.jpg",
+                                                            "https://example.com/public/image2.jpg"
+                                                        ],
+                                                        "area": 64,
+                                                        "floor": 4,
+                                                        "rooms": 3,
+                                                        "floors": 5,
+                                                        "complex": {
+                                                            "id": 1,
+                                                            "title": "заголовок",
+                                                            "locationDescription": "описание локации"
+                                                        },
+                                                        "metro": {
+                                                            "title": "Комсомольская",
+                                                            "timeToMetroOnFoot": 5,
+                                                            "timeToMetroOnTransport": 2
+                                                        },
+                                                        "titleDescription": "Уникальное предложение",
+                                                        "description": "описание",
+                                                        "type": "RENT",
+                                                        "address": "Тверской р-н, ул.Мосфильмовская, дом 1",
+                                                        "contact": {
+                                                            "phone": "79999999999",
+                                                            "whatsapp": "79999999999"
+                                                        },
+                                                        "discount": "95000000",
+                                                        "pricePerMeter": "950000",
+                                                        "isFavorite": true
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "Selection Complex": {
+                                        "summary": "выборка объектов ЖК",
+                                        "value": {
+                                            "selection": {
+                                                "id": 123,
+                                                "type": "COMPLEXES",
+                                                "objects": [
+                                                    {
+                                                        "id": 123,
+                                                        "title": "Заголовок ЖК",
+                                                        "images": [
+                                                            "https://example.com/public/image1.jpg",
+                                                            "https://example.com/public/image2.jpg"
+                                                        ],
+                                                        "metro": {
+                                                            "timeToMetroOnFoot": 5,
+                                                            "timeToMetroOnTransport": 2,
+                                                            "title": "комсомольская"
+                                                        },
+                                                        "flats": [
+                                                            {
+                                                                "square": 54,
+                                                                "rooms": 4,
+                                                                "price": 98000000
+                                                            }
+                                                        ],
+                                                        "address": "Тверской р-н, ул.Мосфильмовская, дом 1",
+                                                        "contact": {
+                                                            "phone": "79999999999",
+                                                            "whatsapp": "79999999999"
+                                                        },
+                                                        "isFavorite": true,
+                                                        "developerFlatsCount": 5,
+                                                        "ownerFlatsCount": 10,
+                                                        "developer": {
+                                                            "name": "Developer name"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ComplexListingFilter": {
+                "properties": {
+                    "parking_type": {
+                        "type": "integer",
+                        "enum": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "ComplexIndexRequest": {
+                "properties": {
+                    "filters": {
+                        "$ref": "#/components/schemas/ComplexListingFilter"
+                    },
+                    "sortAttribute": {
+                        "type": "string",
+                        "enum": [
+                            "default",
+                            "price_min",
+                            "price_max",
+                            "area"
+                        ]
+                    },
+                    "perPage": {
+                        "description": "Количество элементов на странице",
+                        "type": "integer",
+                        "maximum": 50,
+                        "minimum": 1
+                    },
+                    "page": {
+                        "description": "Номер страницы",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ComplexEventContent": {
+                "oneOf": [
+                    {
+                        "required": [
+                            "type",
+                            "value"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "text"
+                            },
+                            "text": {
+                                "type": "string",
+                                "example": "Text content"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "required": [
+                            "type",
+                            "value"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "images"
+                            },
+                            "value": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "https://example.com/image.jpg"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "ComplexEvent": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ComplexEventContent"
+                        }
+                    },
+                    "publishedAt": {
+                        "description": "дата публикации",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "complex": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "title": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ComplexSaleFlats": {
+                "description": "Подборка \"продажа квартир\"",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "price": {
+                        "description": "Цена сдачи квартиры",
+                        "type": "integer"
+                    },
+                    "highEndLuxury": {
+                        "description": "Является тяжелым люксом",
+                        "type": "boolean"
+                    },
+                    "images": {
+                        "description": "Список url изображений",
+                        "type": "array",
+                        "items": {
+                            "description": "Url изображения",
+                            "type": "string"
+                        }
+                    },
+                    "area": {
+                        "description": "Площадь квартиры",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "floor": {
+                        "description": "этаж",
+                        "type": "integer"
+                    },
+                    "rooms": {
+                        "description": "кол-во комнат",
+                        "type": "integer"
+                    },
+                    "floors": {
+                        "description": "кол-во этажей",
+                        "type": "integer"
+                    },
+                    "complex": {
+                        "description": "ЖК",
+                        "properties": {
+                            "id": {
+                                "description": "ID",
+                                "type": "integer"
+                            },
+                            "title": {
+                                "description": "Название",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "metro": {
+                        "description": "Станция метро",
+                        "properties": {
+                            "title": {
+                                "description": "Название станции метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро на пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "description": {
+                        "description": "Описание",
+                        "type": "string"
+                    },
+                    "titleDescription": {
+                        "description": "Заголовок описания",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Тип квартиры",
+                        "type": "string",
+                        "example": "SALE"
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "WhatsApp",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "discount": {
+                        "description": "Скидка",
+                        "type": "integer"
+                    },
+                    "pricePerMeter": {
+                        "description": "Цена за метр",
+                        "type": "integer"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "StatsSaleFlats": {
+                "description": "Минимальные значения и количество комнат, сгруппированная по комнатам",
+                "properties": {
+                    "rooms": {
+                        "description": "Количество комнат",
+                        "type": "integer"
+                    },
+                    "pricePerMeter": {
+                        "description": "Минимальная цена за метр квадратный",
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "price": {
+                        "description": "Минимальная цена",
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "square": {
+                        "description": "Минимальная площадь",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float"
+                    },
+                    "count": {
+                        "description": "Количество квартира",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "complexEvents": {
+                "description": "Список новостей ЖК",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "Url изображения",
+                        "type": "string"
+                    },
+                    "publishedAt": {
+                        "description": "дата публикации",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ComplexFlat": {
+                "description": "Подборка квартиры комплекса",
+                "properties": {
+                    "price": {
+                        "description": "Цена",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "area": {
+                        "description": "Площадь",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "rooms": {
+                        "description": "Количество комнат",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Complexes": {
+                "description": "Подборка \"Жилые комплексы\"",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Название",
+                        "type": "string"
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "metro": {
+                        "properties": {
+                            "title": {
+                                "description": "название метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "flats": {
+                        "description": "Список квартир",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ComplexFlat"
+                        }
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "Whatsapp аккаунт",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    },
+                    "developerFlatsCount": {
+                        "description": "Количество квартир застройщика",
+                        "type": "integer"
+                    },
+                    "ownerFlatsCount": {
+                        "description": "Количество квартир владельца",
+                        "type": "integer"
+                    },
+                    "developer": {
+                        "properties": {
+                            "name": {
+                                "description": "Имя застройщика",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ComplexMap": {
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "count": {
+                        "description": "Количество квартир",
+                        "type": "integer"
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "coordinates": {
+                        "description": "Координаты",
+                        "properties": {
+                            "lat": {
+                                "description": "Широта",
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "long": {
+                                "description": "Долгота",
+                                "type": "number",
+                                "format": "float"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ComplexParams": {
+                "description": "Класс для отображения параметров комплекса",
+                "type": "array",
+                "items": {
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "value": {
+                            "type": "string"
+                        },
+                        "icon": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "DetailComplex": {
+                "description": "Детальная страница Жилого комплекса",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Название",
+                        "type": "string"
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "flatsMinPrice": {
+                        "description": "Цена квартиры (мин. значение)",
+                        "type": "integer"
+                    },
+                    "flatsMaxPrice": {
+                        "description": "Цена квартиры (макс. значение)",
+                        "type": "integer"
+                    },
+                    "flatsMinSquare": {
+                        "description": "Площадь квартиры (мин. значение)",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "flatsMaxSquare": {
+                        "description": "Площадь квартиры (макс. значение)",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "metro": {
+                        "properties": {
+                            "title": {
+                                "description": "название метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "highEndLuxury": {
+                        "description": "Тяжелый люкс",
+                        "type": "boolean"
+                    },
+                    "badges": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "Эскроу"
+                        }
+                    },
+                    "params": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ComplexParams"
+                        }
+                    },
+                    "description": {
+                        "description": "Описание",
+                        "type": "string"
+                    },
+                    "locationDescription": {
+                        "description": "Описание локации",
+                        "type": "string"
+                    },
+                    "bestFlats": {
+                        "description": "Список лучших квартир",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ComplexSaleFlats"
+                        }
+                    },
+                    "news": {
+                        "description": "Список новостей",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/complexEvents"
+                        }
+                    },
+                    "statFlats": {
+                        "description": "Информация о количестве квартир по количеству комнат, минимальной цене, площади",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StatsSaleFlats"
+                        }
+                    },
+                    "promotions": {
+                        "description": "Акции от застройщика",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "title": {
+                                    "description": "Название акции",
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "description": "Описание акции",
+                                    "type": "string"
+                                },
+                                "hashtag": {
+                                    "description": "Хэштег акции",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "nearComplexes": {
+                        "description": "Список соседних комплексов",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Complexes"
+                        }
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "isFavorite": {
+                        "description": "в избранном",
+                        "type": "boolean"
+                    },
+                    "escrow": {
+                        "description": "ЕСКРОУ",
+                        "type": "boolean"
+                    },
+                    "contact": {
+                        "description": "Контакты",
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "whatsapp аккаунт",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "coordinates": {
+                        "description": "Координаты",
+                        "properties": {
+                            "lat": {
+                                "description": "Широта",
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "long": {
+                                "description": "Долгота",
+                                "type": "number",
+                                "format": "float"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "hasParking": {
+                        "description": "Наличие паркинга",
+                        "type": "boolean"
+                    },
+                    "maxCeilingHeight": {
+                        "description": "Высота потолка",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "class": {
+                        "description": "класс",
+                        "type": "string"
+                    },
+                    "statusPremises": {
+                        "description": "статус помещений",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ComplexFilter": {
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ComplexListingFilter"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ComplexIds": {
+                "description": "Список комплексов по ids",
+                "properties": {
+                    "complexes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Complexes"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ComplexListing": {
+                "title": "Список жилых комплексов",
+                "properties": {
+                    "totalPages": {
+                        "description": "Total of pages",
+                        "type": "integer"
+                    },
+                    "total": {
+                        "description": "Total of elements",
+                        "type": "integer"
+                    },
+                    "currentPage": {
+                        "description": "Current page",
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "elements": {
+                        "description": "List of elements",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Complexes"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "complexEventDetail": {
+                "description": "Детальная страница новостей ЖК",
+                "properties": {
+                    "complexEvent": {
+                        "$ref": "#/components/schemas/ComplexEvent"
+                    }
+                },
+                "type": "object"
+            },
+            "PlacemarkDetail": {
+                "description": "Деталка на карте комплекса",
+                "properties": {
+                    "placemark": {
+                        "properties": {
+                            "id": {
+                                "description": "Идентификатор комплекса",
+                                "type": "integer"
+                            },
+                            "flats": {
+                                "description": "Квартиры",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ComplexSaleFlats"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "PlacemarkListing": {
+                "description": "Список маркеров на карте",
+                "properties": {
+                    "placemarks": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ComplexMap"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RentFlatListingFilter": {
+                "properties": {
+                    "rooms": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "example": 2
+                        }
+                    },
+                    "price_from": {
+                        "type": "integer"
+                    },
+                    "price_to": {
+                        "type": "integer"
+                    },
+                    "area_from": {
+                        "type": "integer"
+                    },
+                    "area_to": {
+                        "type": "integer"
+                    },
+                    "search": {
+                        "description": "Поиск по описанию",
+                        "type": "string"
+                    },
+                    "floor_from": {
+                        "type": "integer"
+                    },
+                    "floor_to": {
+                        "type": "integer"
+                    },
+                    "apartment": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "SaleFlatListingFilter": {
+                "properties": {
+                    "rooms": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "example": 2
+                        }
+                    },
+                    "price_from": {
+                        "type": "integer"
+                    },
+                    "price_to": {
+                        "type": "integer"
+                    },
+                    "area_from": {
+                        "type": "integer"
+                    },
+                    "area_to": {
+                        "type": "integer"
+                    },
+                    "search": {
+                        "type": "string"
+                    },
+                    "apartment": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RentFlatListingRequest": {
+                "properties": {
+                    "filters": {
+                        "$ref": "#/components/schemas/RentFlatListingFilter"
+                    },
+                    "sortingAttribute": {
+                        "description": "Атрибут сортировки",
+                        "type": "string",
+                        "enum": [
+                            "default",
+                            "price_desc",
+                            "price_asc",
+                            "area"
+                        ]
+                    },
+                    "perPage": {
+                        "description": "Количество элементов на странице",
+                        "type": "integer",
+                        "maximum": 50,
+                        "minimum": 1
+                    },
+                    "page": {
+                        "description": "Номер страницы",
+                        "type": "integer",
+                        "minimum": 1
+                    }
+                },
+                "type": "object"
+            },
+            "SaleFlatIndexRequest": {
+                "properties": {
+                    "filters": {
+                        "$ref": "#/components/schemas/SaleFlatListingFilter"
+                    },
+                    "sortingAttribute": {
+                        "description": "Атрибут сортировки",
+                        "type": "string",
+                        "enum": [
+                            "default",
+                            "price_desc",
+                            "price_asc",
+                            "area"
+                        ]
+                    },
+                    "perPage": {
+                        "description": "Количество элементов на странице",
+                        "type": "integer",
+                        "maximum": 50,
+                        "minimum": 1
+                    },
+                    "page": {
+                        "description": "Номер страницы",
+                        "type": "integer",
+                        "minimum": 1
+                    }
+                },
+                "type": "object"
+            },
+            "ComplexFlatByRooms": {
+                "description": "Подборка квартиры комплекса",
+                "properties": {
+                    "price": {
+                        "description": "Цена",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "area": {
+                        "description": "Площадь",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "rooms": {
+                        "description": "Количество комнат",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "FlatComplex": {
+                "title": "Жилой комплекс квартиры",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "NearComplexes": {
+                "description": "Подборка \"Жилые комплексы\"",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Название",
+                        "type": "string"
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "metro": {
+                        "properties": {
+                            "title": {
+                                "description": "название метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "flats": {
+                        "description": "Список квартир",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ComplexFlatByRooms"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "NearRentFlats": {
+                "description": "\"Аренда квартир\" рядом",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "type": {
+                        "description": "Тип квартиры",
+                        "type": "string",
+                        "example": "RENT"
+                    },
+                    "price": {
+                        "description": "Цена сдачи квартиры",
+                        "type": "integer"
+                    },
+                    "highEndLuxury": {
+                        "description": "Является тяжелым люксом",
+                        "type": "boolean"
+                    },
+                    "images": {
+                        "description": "Список url изображений",
+                        "type": "array",
+                        "items": {
+                            "description": "Url изображения",
+                            "type": "string"
+                        }
+                    },
+                    "area": {
+                        "description": "Площадь квартиры",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "floor": {
+                        "description": "этаж",
+                        "type": "integer"
+                    },
+                    "rooms": {
+                        "description": "кол-во комнат",
+                        "type": "integer"
+                    },
+                    "floors": {
+                        "description": "кол-во этажей",
+                        "type": "integer"
+                    },
+                    "complex": {
+                        "$ref": "#/components/schemas/FlatComplex",
+                        "description": "ЖК"
+                    },
+                    "metro": {
+                        "description": "Станция метро",
+                        "properties": {
+                            "title": {
+                                "description": "Название станции метро",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "titleDescription": {
+                        "description": "Заголовок описания",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "WhatsApp",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "discount": {
+                        "description": "Скидка",
+                        "type": "integer"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "NearSaleFlats": {
+                "description": "\"продажа квартир\" рядом",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "type": {
+                        "description": "Тип квартиры",
+                        "type": "string",
+                        "example": "SALE"
+                    },
+                    "price": {
+                        "description": "Цена сдачи квартиры",
+                        "type": "integer"
+                    },
+                    "highEndLuxury": {
+                        "description": "Является тяжелым люксом",
+                        "type": "boolean"
+                    },
+                    "images": {
+                        "description": "Список url изображений",
+                        "type": "array",
+                        "items": {
+                            "description": "Url изображения",
+                            "type": "string"
+                        }
+                    },
+                    "area": {
+                        "description": "Площадь квартиры",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "floor": {
+                        "description": "этаж",
+                        "type": "integer"
+                    },
+                    "rooms": {
+                        "description": "кол-во комнат",
+                        "type": "integer"
+                    },
+                    "floors": {
+                        "description": "кол-во этажей",
+                        "type": "integer"
+                    },
+                    "complex": {
+                        "$ref": "#/components/schemas/FlatComplex",
+                        "description": "ЖК"
+                    },
+                    "metro": {
+                        "description": "Станция метро",
+                        "properties": {
+                            "title": {
+                                "description": "Название станции метро",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "titleDescription": {
+                        "description": "Заголовок описания",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "WhatsApp",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "discount": {
+                        "description": "Скидка",
+                        "type": "integer"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "RentFlatBuildingMap": {
+                "title": "Корпус на карте",
+                "properties": {
+                    "id": {
+                        "description": "идентификатор корпуса",
+                        "type": "integer"
+                    },
+                    "count": {
+                        "description": "количество квартир",
+                        "type": "integer"
+                    },
+                    "address": {
+                        "description": "Адрес корпуса",
+                        "type": "string"
+                    },
+                    "coordinates": {
+                        "description": "Координаты",
+                        "properties": {
+                            "lat": {
+                                "description": "Широта",
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "long": {
+                                "description": "Долгота",
+                                "type": "number",
+                                "format": "float"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SaleFlatBuildingMap": {
+                "title": "Корпус на карте",
+                "properties": {
+                    "id": {
+                        "description": "идентификатор корпуса",
+                        "type": "integer"
+                    },
+                    "count": {
+                        "description": "количество квартир",
+                        "type": "integer"
+                    },
+                    "address": {
+                        "description": "Адрес корпуса",
+                        "type": "string"
+                    },
+                    "coordinates": {
+                        "description": "Координаты",
+                        "properties": {
+                            "lat": {
+                                "description": "Широта",
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "long": {
+                                "description": "Долгота",
+                                "type": "number",
+                                "format": "float"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "RentFlats": {
+                "description": "Подборка \"снятие квартир\"",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "price": {
+                        "description": "Цена сдачи квартиры",
+                        "type": "integer"
+                    },
+                    "highEndLuxury": {
+                        "description": "Является тяжелым люксом",
+                        "type": "boolean"
+                    },
+                    "images": {
+                        "description": "Список url изображений",
+                        "type": "array",
+                        "items": {
+                            "description": "Url изображения",
+                            "type": "string"
+                        }
+                    },
+                    "area": {
+                        "description": "Площадь квартиры",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "floor": {
+                        "description": "этаж",
+                        "type": "integer"
+                    },
+                    "rooms": {
+                        "description": "кол-во комнат",
+                        "type": "integer"
+                    },
+                    "floors": {
+                        "description": "кол-во этажей",
+                        "type": "integer"
+                    },
+                    "complex": {
+                        "description": "ЖК",
+                        "properties": {
+                            "id": {
+                                "description": "ID ЖК",
+                                "type": "integer"
+                            },
+                            "title": {
+                                "description": "Название ЖК",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "metro": {
+                        "description": "Станция метро",
+                        "properties": {
+                            "title": {
+                                "description": "Название станции метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро на пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "description": {
+                        "description": "Описание",
+                        "type": "string"
+                    },
+                    "titleDescription": {
+                        "description": "Заголовок описания",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Тип квартиры",
+                        "type": "string",
+                        "example": "RENT"
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "WhatsApp",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "discount": {
+                        "description": "Скидка",
+                        "type": "integer"
+                    },
+                    "pricePerMeter": {
+                        "description": "Цена за метр",
+                        "type": "integer"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "saleFlats": {
+                "description": "Подборка \"продажа квартир\"",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "price": {
+                        "description": "Цена сдачи квартиры",
+                        "type": "integer"
+                    },
+                    "highEndLuxury": {
+                        "description": "Является тяжелым люксом",
+                        "type": "boolean"
+                    },
+                    "images": {
+                        "description": "Список url изображений",
+                        "type": "array",
+                        "items": {
+                            "description": "Url изображения",
+                            "type": "string"
+                        }
+                    },
+                    "area": {
+                        "description": "Площадь квартиры",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "floor": {
+                        "description": "этаж",
+                        "type": "integer"
+                    },
+                    "rooms": {
+                        "description": "кол-во комнат",
+                        "type": "integer"
+                    },
+                    "floors": {
+                        "description": "кол-во этажей",
+                        "type": "integer"
+                    },
+                    "complex": {
+                        "$ref": "#/components/schemas/FlatComplex",
+                        "description": "ЖК"
+                    },
+                    "metro": {
+                        "description": "Станция метро",
+                        "properties": {
+                            "title": {
+                                "description": "Название станции метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро на пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "description": {
+                        "description": "Описание",
+                        "type": "string"
+                    },
+                    "titleDescription": {
+                        "description": "Заголовок описания",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Тип квартиры",
+                        "type": "string",
+                        "example": "SALE"
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "WhatsApp",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "discount": {
+                        "description": "Скидка",
+                        "type": "integer"
+                    },
+                    "pricePerMeter": {
+                        "description": "Цена за метр",
+                        "type": "integer"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "StatFlats": {
+                "description": "Минимальные значения и количество комнат, сгруппированная по комнатам",
+                "properties": {
+                    "rooms": {
+                        "description": "Количество комнат",
+                        "type": "integer"
+                    },
+                    "pricePerMeter": {
+                        "description": "Минимальная цена за метр квадратный",
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "price": {
+                        "description": "Минимальная цена",
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "square": {
+                        "description": "Минимальная площадь",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float"
+                    },
+                    "count": {
+                        "description": "Количество квартира",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "BuildingParams": {
+                "description": "Информация о доме (Детальная страница квартир)",
+                "type": "array",
+                "items": {
+                    "properties": {
+                        "value": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "RentFlatBadges": {
+                "description": "Бейджики аренды квартир",
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "example": "Комиссия агенту 50%"
+                }
+            },
+            "RentFlatParams": {
+                "type": "array",
+                "items": {
+                    "properties": {
+                        "icon": {
+                            "type": "string"
+                        },
+                        "value": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "SaleFlatParams": {
+                "type": "array",
+                "items": {
+                    "properties": {
+                        "icon": {
+                            "type": "string",
+                            "example": "common-size"
+                        },
+                        "value": {
+                            "type": "string",
+                            "example": "64 м2"
+                        },
+                        "label": {
+                            "type": "string",
+                            "example": "Общая площадь"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "PlacemarkRentFlatMaps": {
+                "description": "Список квартир для аренды",
+                "properties": {
+                    "placemark": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "flats": {
+                                "description": "список квартир для аренды",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/RentFlats"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "PlacemarkRentFlatListing": {
+                "description": "Список на карте",
+                "properties": {
+                    "placemarks": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SaleFlatBuildingMap"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RentFlatByListIds": {
+                "title": "Список аренд квартир по ids",
+                "properties": {
+                    "rentFlats": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RentFlats"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RentFlatDetail": {
+                "description": "Детальная страница аренды квартиры",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "description": "url изображений",
+                            "type": "string"
+                        }
+                    },
+                    "planImages": {
+                        "type": "array",
+                        "items": {
+                            "description": "url изображений",
+                            "type": "string"
+                        }
+                    },
+                    "rooms": {
+                        "description": "Количество комнат. Где 0 - студия",
+                        "type": "integer"
+                    },
+                    "price": {
+                        "description": "цена квартиры за месяц",
+                        "type": "integer"
+                    },
+                    "highEndLuxury": {
+                        "description": "Тяжелый люкс",
+                        "type": "boolean"
+                    },
+                    "badges": {
+                        "$ref": "#/components/schemas/RentFlatBadges"
+                    },
+                    "complex": {
+                        "$ref": "#/components/schemas/FlatComplex"
+                    },
+                    "address": {
+                        "description": "адрес",
+                        "type": "string"
+                    },
+                    "metro": {
+                        "properties": {
+                            "title": {
+                                "description": "название метро",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "square": {
+                        "description": "Тяжелый люкс",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "floor": {
+                        "description": "этаж",
+                        "type": "integer"
+                    },
+                    "floors": {
+                        "description": "Количество этажей в здании",
+                        "type": "integer"
+                    },
+                    "agency": {
+                        "description": "Наименование агентства",
+                        "type": "string"
+                    },
+                    "broker": {
+                        "description": "Наименование брокера",
+                        "type": "string"
+                    },
+                    "contact": {
+                        "description": "контакты",
+                        "properties": {
+                            "phone": {
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "params": {
+                        "$ref": "#/components/schemas/RentFlatParams"
+                    },
+                    "titleDescription": {
+                        "description": "Заголовок - описание",
+                        "type": "string",
+                        "example": "Уникальное предложение"
+                    },
+                    "description": {
+                        "description": "Описание квартиры",
+                        "type": "string"
+                    },
+                    "buildingParams": {
+                        "$ref": "#/components/schemas/BuildingParams"
+                    },
+                    "coordinates": {
+                        "description": "Координаты",
+                        "properties": {
+                            "lat": {
+                                "description": "Широта",
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "long": {
+                                "description": "Долгота",
+                                "type": "number",
+                                "format": "float"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "nearFlats": {
+                        "description": "Квартиры в этом районе",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NearRentFlats"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RentFlatFilterView": {
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SaleFlatListingFilter"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RentFlatListing": {
+                "title": "Список квартир на продажу",
+                "properties": {
+                    "totalPages": {
+                        "description": "Total of pages",
+                        "type": "integer"
+                    },
+                    "total": {
+                        "description": "Total of elements",
+                        "type": "integer"
+                    },
+                    "currentPage": {
+                        "description": "Current page",
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "elements": {
+                        "description": "List of elements",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RentFlats"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "buildingSaleFlatMaps": {
+                "description": "Список квартир для продаж",
+                "properties": {
+                    "placemark": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "flats": {
+                                "description": "Список квартир для продаж",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/saleFlats"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "PlacemarkSaleFlatListing": {
+                "description": "Список на карте",
+                "properties": {
+                    "placemarks": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SaleFlatBuildingMap"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "SaleFlatByListIds": {
+                "title": "Список покупок квартир по ids",
+                "properties": {
+                    "saleFlats": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/saleFlats"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "SaleFlatDetail": {
+                "description": "Детальная страница продажи квартиры",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "description": "url изображений",
+                            "type": "string",
+                            "example": "https://example.com/public/image1.jpg"
+                        }
+                    },
+                    "planImages": {
+                        "description": "URL изображений плана",
+                        "type": "array",
+                        "items": {
+                            "description": "url изображений",
+                            "type": "string",
+                            "example": "https://example.com/public/image1.jpg"
+                        }
+                    },
+                    "rooms": {
+                        "description": "Количество комнат. Где 0 - студия",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "price": {
+                        "description": "Цена квартиры",
+                        "type": "integer",
+                        "example": 3000000
+                    },
+                    "oldPrice": {
+                        "description": "Старая цена",
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "pricePerMeter": {
+                        "description": "Цена за метр",
+                        "type": "integer",
+                        "example": 300000
+                    },
+                    "highEndLuxury": {
+                        "description": "Тяжелый люкс",
+                        "type": "boolean"
+                    },
+                    "complex": {
+                        "$ref": "#/components/schemas/FlatComplex"
+                    },
+                    "metro": {
+                        "properties": {
+                            "title": {
+                                "description": "название метро",
+                                "type": "string",
+                                "example": "Парк Победы"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "square": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 50
+                    },
+                    "floor": {
+                        "description": "этаж",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "floors": {
+                        "description": "Количество этажей в здании",
+                        "type": "integer"
+                    },
+                    "params": {
+                        "$ref": "#/components/schemas/SaleFlatParams"
+                    },
+                    "buildingParams": {
+                        "$ref": "#/components/schemas/BuildingParams"
+                    },
+                    "titleDescription": {
+                        "description": "Заголовок - описание",
+                        "type": "string",
+                        "example": "Уникальное предложение"
+                    },
+                    "description": {
+                        "description": "Описание квартиры",
+                        "type": "string"
+                    },
+                    "statFlats": {
+                        "description": "информация о квартирах",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StatFlats"
+                        }
+                    },
+                    "agency": {
+                        "description": "Наименование агентства",
+                        "type": "string"
+                    },
+                    "broker": {
+                        "description": "Наименование брокера",
+                        "type": "string"
+                    },
+                    "contact": {
+                        "description": "контакты",
+                        "properties": {
+                            "phone": {
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "nearComplexes": {
+                        "description": "ближайшие ЖК",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NearComplexes"
+                        }
+                    },
+                    "address": {
+                        "description": "адрес",
+                        "type": "string"
+                    },
+                    "nearFlats": {
+                        "description": "Квартиры в этом районе",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NearSaleFlats"
+                        }
+                    },
+                    "coordinates": {
+                        "description": "Координаты",
+                        "properties": {
+                            "lat": {
+                                "description": "Широта",
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "long": {
+                                "description": "Долгота",
+                                "type": "number",
+                                "format": "float"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SaleFlatListing": {
+                "title": "Список квартир",
+                "properties": {
+                    "totalPages": {
+                        "description": "Total of pages",
+                        "type": "integer"
+                    },
+                    "total": {
+                        "description": "Total of elements",
+                        "type": "integer"
+                    },
+                    "currentPage": {
+                        "description": "Current page",
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "elements": {
+                        "description": "List of elements",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/saleFlats"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "CategoryArticleFilter": {
+                "properties": {
+                    "search": {
+                        "description": "Поиск по заголовку и тексту",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "tag": {
+                        "description": "Тег",
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "NewsFilter": {
+                "properties": {
+                    "search": {
+                        "description": "Поиск по заголовку и тексту",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "tag": {
+                        "description": "Тег",
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "CategoryArticleIndexRequest": {
+                "properties": {
+                    "filters": {
+                        "$ref": "#/components/schemas/CategoryArticleFilter"
+                    },
+                    "sortingAttribute": {
+                        "type": "string",
+                        "enum": [
+                            "popular",
+                            "published_at_asc",
+                            "published_at_desc"
+                        ]
+                    },
+                    "perPage": {
+                        "type": "integer",
+                        "maximum": 50,
+                        "minimum": 1
+                    },
+                    "page": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "NewsIndexRequest": {
+                "properties": {
+                    "filters": {
+                        "$ref": "#/components/schemas/NewsFilter"
+                    },
+                    "sortingAttribute": {
+                        "type": "string",
+                        "enum": [
+                            "popular",
+                            "published_at_asc",
+                            "published_at_desc"
+                        ]
+                    },
+                    "perPage": {
+                        "type": "integer",
+                        "maximum": 50,
+                        "minimum": 1
+                    },
+                    "page": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ArticleCategory": {
+                "title": "Article Category",
+                "description": "Article Category",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Content": {
+                "oneOf": [
+                    {
+                        "required": [
+                            "type",
+                            "value"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "title"
+                            },
+                            "text": {
+                                "type": "string",
+                                "example": "title content"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "required": [
+                            "type",
+                            "value"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "text"
+                            },
+                            "text": {
+                                "type": "string",
+                                "example": "Text content"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "required": [
+                            "type",
+                            "value"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "image"
+                            },
+                            "value": {
+                                "properties": {
+                                    "url": {
+                                        "type": "string",
+                                        "example": "https://example.com/image.jpg"
+                                    },
+                                    "fields": {
+                                        "properties": {
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Image description"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "Article": {
+                "title": "Article",
+                "properties": {
+                    "title": {
+                        "description": "Заголовок статьи",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Slug статьи",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "URL изображения статьи",
+                        "type": "string"
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/ArticleCategory",
+                        "description": "Категория статьи"
+                    },
+                    "published_at": {
+                        "description": "Дата публикации статьи",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "News": {
+                "properties": {
+                    "title": {
+                        "description": "title",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "slug",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "URL изображения статьи",
+                        "type": "string"
+                    },
+                    "publishedAt": {
+                        "description": "published at",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ArticleSelectionComplex": {
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Заголовок комплекса",
+                        "type": "string"
+                    },
+                    "images": {
+                        "description": "Список url изображений",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "description": "url изображения",
+                            "type": "string"
+                        }
+                    },
+                    "metro": {
+                        "properties": {
+                            "title": {
+                                "description": "название метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "flats": {
+                        "description": "Список квартир",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "square": {
+                                    "description": "Площадь",
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "rooms": {
+                                    "description": "количество комнат",
+                                    "type": "integer"
+                                },
+                                "price": {
+                                    "description": "Цена",
+                                    "type": "integer"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "Whatsapp аккаунт",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    },
+                    "developerFlatsCount": {
+                        "description": "Количество квартир застройщика",
+                        "type": "integer"
+                    },
+                    "ownerFlatsCount": {
+                        "description": "Количество квартир владельца",
+                        "type": "integer"
+                    },
+                    "developer": {
+                        "properties": {
+                            "name": {
+                                "description": "Имя застройщика",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ArticleSelectionFlat": {
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "price": {
+                        "description": "Цена сдачи квартиры",
+                        "type": "integer"
+                    },
+                    "highEndLuxury": {
+                        "description": "Является тяжелым люксом",
+                        "type": "boolean"
+                    },
+                    "images": {
+                        "description": "Список url изображений",
+                        "type": "array",
+                        "items": {
+                            "description": "Url изображения",
+                            "type": "string"
+                        }
+                    },
+                    "area": {
+                        "description": "Площадь квартиры",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "floor": {
+                        "description": "этаж",
+                        "type": "integer"
+                    },
+                    "rooms": {
+                        "description": "кол-во комнат",
+                        "type": "integer"
+                    },
+                    "floors": {
+                        "description": "кол-во этажей",
+                        "type": "integer"
+                    },
+                    "complex": {
+                        "description": "ЖК",
+                        "properties": {
+                            "id": {
+                                "description": "ID ЖК",
+                                "type": "integer"
+                            },
+                            "title": {
+                                "description": "Название ЖК",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "metro": {
+                        "description": "Станция метро",
+                        "properties": {
+                            "title": {
+                                "description": "Название станции метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро на пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "description": {
+                        "description": "Описание",
+                        "type": "string"
+                    },
+                    "titleDescription": {
+                        "description": "Заголовок описания",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Тип квартиры",
+                        "type": "string",
+                        "enum": [
+                            "RENT",
+                            "SALE"
+                        ]
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "WhatsApp",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "discount": {
+                        "description": "Скидка",
+                        "type": "integer"
+                    },
+                    "pricePerMeter": {
+                        "description": "Цена за метр",
+                        "type": "integer"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "ArticleSelectionRentFlat": {
+                "$ref": "#/components/schemas/ArticleSelectionFlat"
+            },
+            "ArticleSelectionSaleFlat": {
+                "$ref": "#/components/schemas/ArticleSelectionFlat"
+            },
+            "ArticleSelection": {
+                "description": "Детальная информация о подборке",
+                "properties": {
+                    "type": {
+                        "description": "Тип подборки",
+                        "type": "string",
+                        "enum": [
+                            "FLATS",
+                            "COMPLEXES"
+                        ]
+                    },
+                    "objects": {
+                        "description": "Объекты подборки, зависит от типа подборки",
+                        "type": "array",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/ArticleSelectionSaleFlat"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/ArticleSelectionRentFlat"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/ArticleSelectionComplex"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "TagResource": {
+                "title": "Tag",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "IndexArticle": {
+                "title": "Article index",
+                "properties": {
+                    "totalPages": {
+                        "description": "Total of pages",
+                        "type": "integer"
+                    },
+                    "total": {
+                        "description": "Total of elements",
+                        "type": "integer"
+                    },
+                    "currentPage": {
+                        "description": "Current page",
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "elements": {
+                        "description": "List of elements",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Article"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ShowArticle": {
+                "title": "Show Article",
+                "properties": {
+                    "article": {
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "slug": {
+                                "type": "string"
+                            },
+                            "publishedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "image": {
+                                "description": "URL изображения статьи",
+                                "type": "string"
+                            },
+                            "content": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Content"
+                                }
+                            },
+                            "category": {
+                                "$ref": "#/components/schemas/ArticleCategory"
+                            },
+                            "selection": {
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ArticleSelection"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "IndexArticleCategory": {
+                "title": "Article Categories",
+                "description": "Article Categories",
+                "properties": {
+                    "categories": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ArticleCategory"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "CategoryArticleIndex": {
+                "title": "Pagination of CategoryArticle",
+                "properties": {
+                    "totalPages": {
+                        "description": "Total of pages",
+                        "type": "integer"
+                    },
+                    "total": {
+                        "description": "Total of elements",
+                        "type": "integer"
+                    },
+                    "currentPage": {
+                        "description": "Current page",
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "elements": {
+                        "description": "List of elements",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Article"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationNews": {
+                "title": "Pagination of News",
+                "properties": {
+                    "totalPages": {
+                        "description": "Total of pages",
+                        "type": "integer"
+                    },
+                    "total": {
+                        "description": "Total of elements",
+                        "type": "integer"
+                    },
+                    "currentPage": {
+                        "description": "Current page",
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "elements": {
+                        "description": "List of elements",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/News"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "IndexNews": {
+                "title": "Index News",
+                "description": "List of news",
+                "properties": {
+                    "news": {
+                        "$ref": "#/components/schemas/PaginationNews"
+                    }
+                },
+                "type": "object"
+            },
+            "ShowNews": {
+                "title": "Show News",
+                "properties": {
+                    "news": {
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "slug": {
+                                "type": "string"
+                            },
+                            "publishedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "image": {
+                                "description": "URL изображения",
+                                "type": "string"
+                            },
+                            "content": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Content"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "TagArticleCategory": {
+                "description": "Tags for article category",
+                "properties": {
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TagResource"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "TagNews": {
+                "description": "Tags for news",
+                "properties": {
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TagResource"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Selections": {
+                "description": "Индекс подборок",
+                "properties": {
+                    "id": {
+                        "description": "ID подборки",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Название подборок",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Тип подборок",
+                        "type": "string",
+                        "enum": [
+                            "SALE_FLATS",
+                            "RENT_FLATS",
+                            "COMPLEXES"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "SelectionComplex": {
+                "description": "Подборка \"Жилые комплексы\"",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Название",
+                        "type": "string"
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "metro": {
+                        "properties": {
+                            "title": {
+                                "description": "название метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "flats": {
+                        "description": "Список квартир",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SelectionComplexFlat"
+                        }
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "Whatsapp аккаунт",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    },
+                    "developerFlatsCount": {
+                        "description": "Количество квартир застройщика",
+                        "type": "integer"
+                    },
+                    "ownerFlatsCount": {
+                        "description": "Количество квартир владельца",
+                        "type": "integer"
+                    },
+                    "developer": {
+                        "properties": {
+                            "name": {
+                                "description": "Имя застройщика",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SelectionComplexFlat": {
+                "description": "Подборка квартиры комплекса",
+                "properties": {
+                    "price": {
+                        "description": "Цена",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "area": {
+                        "description": "Площадь",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "rooms": {
+                        "description": "Количество комнат",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "SelectionFlatComplex": {
+                "description": "Подборка \"Жилые комплексы\" квартир",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Название",
+                        "type": "string"
+                    },
+                    "locationDescription": {
+                        "description": "Расположение",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "SelectionRentFlats": {
+                "description": "Подборка \"снятие квартир\"",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "price": {
+                        "description": "Цена сдачи квартиры",
+                        "type": "integer"
+                    },
+                    "highEndLuxury": {
+                        "description": "Является тяжелым люксом",
+                        "type": "boolean"
+                    },
+                    "images": {
+                        "description": "Список url изображений",
+                        "type": "array",
+                        "items": {
+                            "description": "Url изображения",
+                            "type": "string"
+                        }
+                    },
+                    "area": {
+                        "description": "Площадь квартиры",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "floor": {
+                        "description": "этаж",
+                        "type": "integer"
+                    },
+                    "rooms": {
+                        "description": "кол-во комнат",
+                        "type": "integer"
+                    },
+                    "floors": {
+                        "description": "кол-во этажей",
+                        "type": "integer"
+                    },
+                    "complex": {
+                        "description": "ЖК",
+                        "properties": {
+                            "id": {
+                                "description": "ID ЖК",
+                                "type": "integer"
+                            },
+                            "title": {
+                                "description": "Название ЖК",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "metro": {
+                        "description": "Станция метро",
+                        "properties": {
+                            "title": {
+                                "description": "Название станции метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро на пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "description": {
+                        "description": "Описание",
+                        "type": "string"
+                    },
+                    "titleDescription": {
+                        "description": "Заголовок описания",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Тип квартиры",
+                        "type": "string",
+                        "enum": [
+                            "RENT",
+                            "SALE"
+                        ]
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "WhatsApp",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "discount": {
+                        "description": "Скидка",
+                        "type": "integer"
+                    },
+                    "pricePerMeter": {
+                        "description": "Цена за метр",
+                        "type": "integer"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "SelectionSaleFlats": {
+                "description": "Подборка \"продажа квартир\"",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer"
+                    },
+                    "price": {
+                        "description": "Цена сдачи квартиры",
+                        "type": "integer"
+                    },
+                    "highEndLuxury": {
+                        "description": "Является тяжелым люксом",
+                        "type": "boolean"
+                    },
+                    "images": {
+                        "description": "Список url изображений",
+                        "type": "array",
+                        "items": {
+                            "description": "Url изображения",
+                            "type": "string"
+                        }
+                    },
+                    "area": {
+                        "description": "Площадь квартиры",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "floor": {
+                        "description": "этаж",
+                        "type": "integer"
+                    },
+                    "rooms": {
+                        "description": "кол-во комнат",
+                        "type": "integer"
+                    },
+                    "floors": {
+                        "description": "кол-во этажей",
+                        "type": "integer"
+                    },
+                    "complex": {
+                        "description": "ЖК",
+                        "properties": {
+                            "id": {
+                                "description": "ID ЖК",
+                                "type": "integer"
+                            },
+                            "title": {
+                                "description": "Название ЖК",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "metro": {
+                        "description": "Станция метро",
+                        "properties": {
+                            "title": {
+                                "description": "Название станции метро",
+                                "type": "string"
+                            },
+                            "timeToMetroOnFoot": {
+                                "description": "Время до метро на пешком",
+                                "type": "integer"
+                            },
+                            "timeToMetroOnTransport": {
+                                "description": "Время до метро на транспорте",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "description": {
+                        "description": "Описание",
+                        "type": "string"
+                    },
+                    "titleDescription": {
+                        "description": "Заголовок описания",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Адрес",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Тип квартиры",
+                        "type": "string",
+                        "enum": [
+                            "RENT",
+                            "SALE"
+                        ]
+                    },
+                    "contact": {
+                        "properties": {
+                            "phone": {
+                                "description": "Телефон",
+                                "type": "string"
+                            },
+                            "whatsapp": {
+                                "description": "WhatsApp",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "discount": {
+                        "description": "Скидка",
+                        "type": "integer"
+                    },
+                    "pricePerMeter": {
+                        "description": "Цена за метр",
+                        "type": "integer"
+                    },
+                    "isFavorite": {
+                        "description": "В избранном",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "SelectionObjects": {
+                "description": "Детальная информация о подборке",
+                "properties": {
+                    "id": {
+                        "description": "ID подборки",
+                        "type": "integer"
+                    },
+                    "type": {
+                        "description": "Тип подборки",
+                        "type": "string",
+                        "enum": [
+                            "FLATS",
+                            "COMPLEXES"
+                        ]
+                    },
+                    "objects": {
+                        "description": "Объекты подборки, зависит от типа подборки",
+                        "type": "array",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/SelectionSaleFlats"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/SelectionRentFlats"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/SelectionComplex"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "IndexSelection": {
+                "title": "Index SelectionObjects",
+                "properties": {
+                    "selections": {
+                        "$ref": "#/components/schemas/Selections"
+                    }
+                },
+                "type": "object"
+            },
+            "ShowSelection": {
+                "title": "ShowSelection",
+                "properties": {
+                    "selection": {
+                        "$ref": "#/components/schemas/SelectionObjects"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "api_key_client": {
+                "type": "apiKey",
+                "description": "A short description for security scheme",
+                "name": "X-Api-Client",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "complex",
+            "description": "Жилой комплекс"
+        },
+        {
+            "name": "flats",
+            "description": "Квартиры"
+        },
+        {
+            "name": "journal",
+            "description": "Журнал новостей и статей"
+        },
+        {
+            "name": "selection",
+            "description": "Подборки объектов"
+        }
+    ],
+    "security": [
+        {
+            "api_key_client": []
+        }
+    ]
+}

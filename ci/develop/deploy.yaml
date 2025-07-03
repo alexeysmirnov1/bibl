@@ -1,0 +1,24 @@
+develop:deploy:
+  stage: deploy
+  variables:
+    BRANCH_APP_DOMAIN: "api.battle.flagsoft.ru"
+    DOCKER_COMPOSE: "docker-compose"
+    DOCKER_COMPOSE_SOURCE_FILE_NAME: "docker-compose.dev.yml"
+    DOCKER_COMPOSE_REMOTE_FILE_NAME: "docker-compose.yml"
+    REMOTE_PATH: $PATH_DEV
+    REMOTE_HOST_WITH_USER: $USER_DEV@$HOSTNAME_DEV
+    APP_SERVICE_NAME: "app"
+    ARTISAN_CMD: "php artisan"
+    LARAVEL_TAG: dev_app_$CI_COMMIT_SHORT_SHA
+    HOSTNAME: $HOSTNAME_DEV
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://$BRANCH_APP_DOMAIN
+  extends: [.develop_ci_rule_definition]
+  needs:
+    - job: develop:build-app
+      optional: true
+  before_script:
+    - !reference [ .deploy-app-common, before_script ]
+  script:
+    - !reference [ .deploy-app-common, script ]

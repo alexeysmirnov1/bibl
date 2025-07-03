@@ -1,0 +1,32 @@
+develop:build-app:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [ "" ]
+  variables:
+    DOCKERFILE_PATH: "docker/app/Dockerfile"
+    IMAGE_TAG: dev_app_$CI_COMMIT_SHORT_SHA
+    REGISTRY_PROJECT_NAME: "battle"
+    NGINX_UNIT_CONFIG_FILENAME: docker/app/unit-php.dev.json
+  extends: [ .develop_ci_rule_definition ]
+  needs:
+    -   job: develop:tests
+        optional: false
+  before_script:
+    - !reference [ .build-app-common, before_script ]
+  script:
+    - !reference [ .build-app-common, script ]
+
+#develop:larastan:
+#  image:
+#    name: $CI_REGISTRY_IMAGE:dev_app_$CI_COMMIT_SHORT_SHA
+#    entrypoint: [ "" ]
+#  stage: build
+#  extends: [ .develop_ci_rule_definition ]
+#  needs:
+#    - job: develop:build-app
+#      optional: false
+#  before_script:
+#    - ls
+#  script:
+#    - !reference [ .linting-larastan-common, script ]

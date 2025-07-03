@@ -1,0 +1,152 @@
+{
+    "settings": {
+        "http": {
+            "header_read_timeout": 30,
+            "body_read_timeout": 30,
+            "send_timeout": 30,
+            "idle_timeout": 360,
+            "max_body_size": 400000000
+        }
+    },
+    "listeners": {
+        "*:8080": {
+            "pass": "routes"
+        },
+        "*:8081": {
+            "pass": "routes"
+        }
+    },
+    "routes": [
+        {
+            "match": {
+                "uri": [
+                    "*.7z",
+                    "*.bak",
+                    "*.bash",
+                    "*.sh",
+                    "*.bz2",
+                    "*.dist",
+                    "*.engine",
+                    "*.fla",
+                    "*.git",
+                    "*.gz",
+                    "*.inc",
+                    "*.info",
+                    "*.ini",
+                    "*.inc",
+                    "*.install",
+                    "*.iso",
+                    "*.log",
+                    "*.make",
+                    "*.module",
+                    "*.profile",
+                    "*.psd",
+                    "*.py",
+                    "*.rar",
+                    "*.rb",
+                    "*.sql",
+                    "*.swp",
+                    "*.tar",
+                    "*.zip"
+                ]
+            },
+            "action": {
+                "return": 404
+            }
+        },
+        {
+            "match": {
+                "uri": [
+                    "*/docs/asset/*.css",
+                    "*/docs/asset/*.js"
+                ]
+            },
+            "action": {
+                "share": "/var/www/public$uri",
+                "fallback": {
+                    "pass": "applications/battle"
+                }
+            }
+        },
+        {
+            "match": {
+                "uri": [
+                    "*.manifest",
+                    "*.appcache",
+                    "*.rss",
+                    "*.atom",
+                    "*.jpg",
+                    "*.jpeg",
+                    "*.gif",
+                    "*.png",
+                    "*.ico",
+                    "*.cur",
+                    "*.gz",
+                    "*.svg",
+                    "*.svgz",
+                    "*.mp4",
+                    "*.ogg",
+                    "*.ogv",
+                    "*.webm",
+                    "*.htc",
+                    "*.ttf",
+                    "*.ttc",
+                    "*.otf",
+                    "*.eot",
+                    "*.woff",
+                    "*.woff2",
+                    "*.html",
+                    "*.json",
+                    "*.css",
+                    "*.js"
+                ]
+            },
+            "action": {
+                "share": "/var/www/public$uri",
+                "response_headers": {
+                    "Cache-Control": "max-age=3600, s-maxage=3600"
+                }
+            }
+        },
+        {
+            "match": {
+                "uri": "/unit_status"
+            },
+            "action": {
+                "pass": "applications/prometheus"
+            }
+        },
+        {
+            "match": {
+                "host": "api.battle.ru",
+                "uri": "!/index.php"
+            },
+            "action": {
+                "share": "/var/www/public$uri",
+                "fallback": {
+                    "pass": "applications/battle"
+                }
+            }
+        }
+    ],
+    "applications": {
+        "battle": {
+            "type": "php",
+            "root": "/var/www/public",
+            "script": "index.php",
+            "user": "root",
+            "environment": {
+                "HOME": "/root"
+            },
+            "processes": {
+                "max": 100,
+                "spare": 20,
+                "idle_timeout": 30
+            }
+        }
+    },
+    "access_log": {
+        "path": "/dev/stdout",
+        "format": "{\"log_source\":\"unit\",\"message\":\"$request_line\",\"request_time\":\"$request_time\",\"level\":200,\"level_name\":\"INFO\",\"channel\":\"access_log\",\"datetime\":\"$time_local\",\"extra\":{\"url\":\"$uri\",\"ip\":\"$remote_addr\",\"http_method\":\"$method\",\"server\":\"$host\",\"referrer\":\"$header_referer\",\"user_agent\":\"$header_user_agent\",\"status\":\"$status\"}}"
+    }
+}

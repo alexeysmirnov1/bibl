@@ -1,0 +1,60 @@
+version: '3.7'
+
+networks:
+  battle:
+    driver: overlay
+    external: true
+  traefik-public:
+    external: true
+
+services:
+  app:
+    container_name: ${COMPOSE_PROJECT_NAME}_app_test
+    image: ${IMAGE_REGISTRY_PATH}/${REGISTRY_PROJECT_NAME}:${APP_IMAGE_TAG}
+    cap_add:
+      - SYS_PTRACE
+    volumes:
+      - ./.env:/var/www/.env
+      - ./storage:/var/www/storage
+    networks:
+      - traefik-public
+      - ${COMPOSE_PROJECT_NAME?Variable not set}
+    labels:
+      - ru.${COMPOSE_PROJECT_NAME}.container.name=app
+      - traefik.enable=true
+      - traefik.docker.network=traefik-public
+      - traefik.http.middlewares.traefik-compress.compress=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-app-service.loadbalancer.server.port=${APP_PORT}
+
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app-router.rule=Host(`${APP_URI}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app-router.entrypoints=http
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app-router.middlewares=https-redirect,admin-auth
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app-router.service=${COMPOSE_PROJECT_NAME}-app-service
+
+      - traefik.http.routers.secure-api-${COMPOSE_PROJECT_NAME}-app-router.rule=Host(`${APP_URI}`) && PathPrefix(`/api`)
+      - traefik.http.routers.secure-api-${COMPOSE_PROJECT_NAME}-app-router.entrypoints=https
+      - traefik.http.routers.secure-api-${COMPOSE_PROJECT_NAME}-app-router.service=${COMPOSE_PROJECT_NAME}-app-service
+      - traefik.http.routers.secure-api-${COMPOSE_PROJECT_NAME}-app-router.middlewares=traefik-compress
+      - traefik.http.routers.secure-api-${COMPOSE_PROJECT_NAME}-app-router.tls=true
+      - traefik.http.routers.secure-api-${COMPOSE_PROJECT_NAME}-app-router.tls.certresolver=le
+
+      - traefik.http.routers.secure-${COMPOSE_PROJECT_NAME}-app-router.rule=Host(`${APP_URI}`)
+      - traefik.http.routers.secure-${COMPOSE_PROJECT_NAME}-app-router.entrypoints=https
+      - traefik.http.routers.secure-${COMPOSE_PROJECT_NAME}-app-router.service=${COMPOSE_PROJECT_NAME}-app-service
+      - traefik.http.routers.secure-${COMPOSE_PROJECT_NAME}-app-router.middlewares=traefik-compress,admin-auth
+      - traefik.http.routers.secure-${COMPOSE_PROJECT_NAME}-app-router.tls=true
+      - traefik.http.routers.secure-${COMPOSE_PROJECT_NAME}-app-router.tls.certresolver=le
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION}-alpine
+    command: [ "postgres", "-c", "log_statement=all", "-c", "log_destination=stderr" ]
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ${DATA_PATH_HOST}/postgres:/var/lib/postgresql/data:delegated
+    networks:
+      - ${COMPOSE_PROJECT_NAME}
+    restart: unless-stopped

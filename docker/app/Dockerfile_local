@@ -1,0 +1,45 @@
+ARG REGISTRY_PROJECT_NAME=battle
+ARG REPOSITORY_NAME=flagstudio
+FROM registry.gitlab.com/${REPOSITORY_NAME}/${REGISTRY_PROJECT_NAME}/base:unit
+
+# Add a non-root user to prevent files being created with root permissions on host machine.
+ARG PUID=1000
+ENV PUID ${PUID}
+ARG PGID=1000
+ENV PGID ${PGID}
+
+RUN groupadd -g ${PGID} local && \
+    useradd -u ${PUID} -g local -m local -G local && \
+    usermod -p "*" local
+
+
+
+###########################################################################
+# Opcache:
+###########################################################################
+
+# Copy opcache configration
+COPY ./docker/app/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
+###########################################################################
+# pcov:
+###########################################################################
+
+ARG PHP_FPM_INSTALL_PCOV=false
+
+RUN if [ ${PHP_FPM_INSTALL_PCOV} = true ]; then \
+      pecl install pcov \
+      && docker-php-ext-enable pcov \
+    ;fi
+
+ARG NGINX_UNIT_CONFIG_FILENAME=unit-php.json
+COPY ./docker/app/${NGINX_UNIT_CONFIG_FILENAME} /unit-php.json
+COPY ./docker/app/entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+WORKDIR /var/www
+
+EXPOSE 8080 8081
+
+ENTRYPOINT ["/entrypoint.sh"]

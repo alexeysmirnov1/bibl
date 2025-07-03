@@ -1,0 +1,65 @@
+develop:tests:
+  image:
+    name: $CI_REGISTRY_IMAGE/base:unit
+    entrypoint: [ "" ]
+  stage: tests
+  extends: [ .develop_ci_rule_definition ]
+  needs: [develop:pint]
+  coverage: '/Total: \d+.\d+\s\%/'
+  before_script:
+    - ls
+  script:
+    - !reference [ .test-common, script ]
+
+#develop:dusk:
+#  image:
+#    name: $CI_REGISTRY_IMAGE/base:unit
+#    entrypoint: [ "" ]
+#  stage: tests
+#  extends: [ .develop_ci_rule_definition ]
+#  parallel:
+#    matrix:
+#      - GROUP: [1, 2, 3]
+#  before_script:
+#    - ls
+#  script:
+#    - php artisan dusk --group=${GROUP}
+
+#develop:tests-feature:
+#  image:
+#    name: $CI_REGISTRY_IMAGE/base:unit
+#    entrypoint: [ "" ]
+#  stage: tests
+#  extends: [ .develop_ci_rule_definition ]
+#  needs: [develop:pint, develop:larastan]
+#  coverage: '/Total: \d+.\d+\s\%/'
+#  before_script:
+#    - ls
+#  script:
+#    - !reference [ .test-feature-common, script ]
+#
+#develop:tests-unit:
+#  image:
+#    name: $CI_REGISTRY_IMAGE/base:unit
+#    entrypoint: [ "" ]
+#  stage: tests
+#  extends: [ .develop_ci_rule_definition ]
+#  needs: [develop:pint, develop:larastan]
+#  coverage: '/Total: \d+.\d+\s\%/'
+#  before_script:
+#    - ls
+#  script:
+#    - !reference [ .test-unit-common, script ]
+#
+#develop:tests-arch:
+#  image:
+#    name: $CI_REGISTRY_IMAGE/base:unit
+#    entrypoint: [ "" ]
+#  stage: tests
+#  extends: [ .develop_ci_rule_definition ]
+#  needs: [develop:pint, develop:larastan]
+#  coverage: '/Total: \d+.\d+\s\%/'
+#  before_script:
+#    - ls
+#  script:
+#    - !reference [ .test-arch-common, script ]

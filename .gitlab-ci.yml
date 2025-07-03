@@ -1,0 +1,110 @@
+image: docker:latest
+
+stages:
+  - linting
+  - tests
+  - build
+  - deploy
+
+include:
+  - local: 'ci/develop.yaml'
+
+.linting-pint-common:
+  script:
+    - composer i
+    - composer pint
+
+.linting-larastan-common:
+  script:
+    - composer i
+    - vendor/bin/phpstan analyse --generate-baseline --allow-empty-baseline
+
+.linting-hadolint-common:
+  script:
+    - hadolint ./docker/base/Dockerfile_unit
+    - hadolint ./docker/app/Dockerfile
+    - hadolint ./docker/app/Dockerfile_local
+
+.test-common:
+  script:
+    - cp .env.example .env
+    - pecl install pcov
+    - docker-php-ext-enable pcov
+    - composer i
+    - php artisan key:generate
+    - php artisan test --coverage --min=88
+
+.test-feature-common:
+  script:
+    - cp .env.example .env
+    - composer i
+    - php artisan key:generate
+    - php artisan test --parallel --recreate-database --testsuit=Feature
+
+.test-unit-common:
+  script:
+    - cp .env.example .env
+    - pecl install pcov
+    - docker-php-ext-enable pcov
+    - composer i
+    - php artisan key:generate
+    - php artisan test --coverage --min=88 --testsuit=Unit
+
+.test-arch-common:
+  script:
+    - cp .env.example .env
+    - composer i
+    - ./vendor/bin/pest --testsuit=Arch
+
+.build-app-common:
+  before_script:
+    - ls
+    - echo $NGINX_UNIT_CONFIG_FILENAME
+    - export GODEBUG="http2client=0"
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" \
+      > /kaniko/.docker/config.json
+    - export REGISTRY_NAMESPACE="$(echo $CI_PROJECT_NAMESPACE | tr '[:upper:]' '[:lower:]')"
+  script:
+    - >
+      /kaniko/executor --context ${CI_PROJECT_DIR}
+      --build-arg REPOSITORY_NAME=${REGISTRY_NAMESPACE}
+      --build-arg REGISTRY_PROJECT_NAME=${REGISTRY_PROJECT_NAME}
+      --build-arg APP_TAG=${APP_TAG}
+      --build-arg NGINX_UNIT_CONFIG_FILENAME=${NGINX_UNIT_CONFIG_FILENAME}
+      --dockerfile ${CI_PROJECT_DIR}/${DOCKERFILE_PATH}
+      --destination ${CI_REGISTRY_IMAGE}:${IMAGE_TAG}
+      --registry-mirror mirror.gcr.io
+      --cache=true
+
+.deploy-app-common:
+  before_script:
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - ssh-keyscan $HOSTNAME >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - scp $DOCKER_COMPOSE_SOURCE_FILE_NAME $REMOTE_HOST_WITH_USER:$REMOTE_PATH/$DOCKER_COMPOSE_REMOTE_FILE_NAME
+    - ssh -T $REMOTE_HOST_WITH_USER "cd $REMOTE_PATH &&
+      docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" registry.gitlab.com"
+    - ssh -T $REMOTE_HOST_WITH_USER "cd $REMOTE_PATH &&
+      docker pull $CI_REGISTRY_IMAGE:$LARAVEL_TAG"
+    - ssh -T $REMOTE_HOST_WITH_USER "cd $REMOTE_PATH &&
+      sed -i 's/GIT_COMMIT=.*/GIT_COMMIT=$CI_COMMIT_SHORT_SHA/' .env"
+    - ssh -T $REMOTE_HOST_WITH_USER "cd $REMOTE_PATH &&
+      sed -i 's/GIT_BRANCH=.*/GIT_BRANCH=\""$CI_COMMIT_BRANCH"\"/' .env"
+    - ssh -T $REMOTE_HOST_WITH_USER "cd $REMOTE_PATH &&
+      sed -i 's/GIT_DATE=.*/GIT_DATE=\""$CI_COMMIT_TIMESTAMP"\"/' .env"
+    - ssh -T $REMOTE_HOST_WITH_USER "cd $REMOTE_PATH &&
+      sed -i 's/APP_IMAGE_TAG=.*/APP_IMAGE_TAG=\""$LARAVEL_TAG"\"/' .env"
+    - ssh -T $REMOTE_HOST_WITH_USER "cd $REMOTE_PATH &&
+      $DOCKER_COMPOSE up --remove-orphans -d"
+    - ssh -T $REMOTE_HOST_WITH_USER "cd $REMOTE_PATH &&
+      $DOCKER_COMPOSE exec -T $APP_SERVICE_NAME $ARTISAN_CMD migrate --force &&
+      $DOCKER_COMPOSE exec -T $APP_SERVICE_NAME $ARTISAN_CMD db:seed --class=CiSeeder --force &&
+      $DOCKER_COMPOSE exec -T $APP_SERVICE_NAME $ARTISAN_CMD optimize"
+    - ssh -T $REMOTE_HOST_WITH_USER "cd $REMOTE_PATH &&
+      docker image prune --all --force"
+    - ssh -T $REMOTE_HOST_WITH_USER "cd $REMOTE_PATH &&
+      sudo chmod -R 777 storage/ .env data/"
