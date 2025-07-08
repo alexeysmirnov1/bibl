@@ -11,37 +11,17 @@
 |
 */
 
-use Domoteka\Battle\Presentation\Controllers\BattleController;
-use Domoteka\Battle\Presentation\Controllers\RegistryController;
-use Domoteka\Battle\Presentation\Controllers\TaskController;
-use Domoteka\Battle\Presentation\Controllers\TaskVoteController;
-use Domoteka\Battle\Presentation\Middleware\NewBattlerMiddleware;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/battles/{battle}', [BattleController::class, 'show'])
-    ->middleware(NewBattlerMiddleware::class)
-    ->name('battles.show');
+Route::get('/', [ProfileController::class, 'dashboard'])
+    ->name('bibl.dashboard');
 
-Route::get('/battles/{battle}/login', [RegistryController::class, 'create'])
-    ->name('battles.login');
+Route::get('/books', [ProfileController::class, 'books'])
+    ->name('bibl.books.index');
 
-Route::post('/battles/{battle}/confirm', [RegistryController::class, 'store'])
-    ->name('battles.store');
+Route::get('/books/create', [ProfileController::class, 'createBook'])
+    ->name('bibl.books.create');
 
-Route::get('/battles/{battle}/logout', [RegistryController::class, 'delete'])
-    ->name('battles.logout');
-
-Route::get('/tasks/{task}', [TaskController::class, 'show'])
-    ->name('tasks.show');
-
-Route::post('/tasks/{task}', [TaskController::class, 'update'])
-    ->name('tasks.update');
-
-Route::get('/vote/{task}', [TaskVoteController::class, 'edit'])
-    ->name('tasks.vote.edit');
-
-Route::post('/vote/{task}', [TaskVoteController::class, 'store'])
-    ->name('tasks.vote.update');
-
-Route::get('/vote/{task}/results', [TaskVoteController::class, 'show'])
-    ->name('tasks.vote.show');
+Route::post('/books', [ProfileController::class, 'storeBook'])
+    ->name('bibl.books.store');
