@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,17 +14,20 @@
 |
 */
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
-Route::get('/', [ProfileController::class, 'dashboard'])
-    ->name('bibl.dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/books', [ProfileController::class, 'books'])
-    ->name('bibl.books.index');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-Route::get('/books/create', [ProfileController::class, 'createBook'])
-    ->name('bibl.books.create');
-
-Route::post('/books', [ProfileController::class, 'storeBook'])
-    ->name('bibl.books.store');
+require __DIR__.'/auth.php';
+//require __DIR__.'/library.php';
+require __DIR__ . '/shelves.php';

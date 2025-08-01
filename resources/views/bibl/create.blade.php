@@ -2,7 +2,7 @@
 
 <h1>Добавить книгу</h1>
 
-<form action="{{ route('bibl.books.store') }}" method="post">
+<form action="{{ route('shelves.books.store') }}" method="post">
     <label>Название</label>
     <input type="text" id="name">
     <br>

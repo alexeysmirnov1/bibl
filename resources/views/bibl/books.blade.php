@@ -1,6 +1,8 @@
+<x-app-layout>
+
 <h1>My books</h1>
 
-<a href="{{ route('bibl.books.create') }}">Добавить книгу</a>
+<a href="{{ route('shelves.books.create') }}">Добавить книгу</a>
 
 <table border="1">
     <tr>
@@ -27,3 +29,5 @@
         </tr>
     @endforeach
 </table>
+
+</x-app-layout>
