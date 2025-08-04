@@ -1,6 +1,6 @@
 <h1>Dashboard</h1>
 
-<a href="{{ route('bibl.books.index') }}">My books</a>
+<a href="{{ route('shelves.books.index') }}">My books</a>
 
 <h1>Дашборд</h1>
 

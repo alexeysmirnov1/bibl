@@ -10,14 +10,14 @@ class BookController
     {
         $user = User::first();
 
-        return view('bibl.books', [
+        return view('shelves.index', [
             'books' => $user->library()->with('book')->paginate(10),
         ]);
     }
 
     public function create()
     {
-        return view('bibl.create');
+        return view('shelves.create');
     }
 
     public function store()

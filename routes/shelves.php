@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Literati\Shelves\Presentation\Controllers\BookController;
+use Literati\Shelves\Presentation\Controllers\ShelvesController;
 
 Route::name('shelves.')
+    ->middleware('auth')
     ->group(function () {
-        Route::get('/', [ProfileController::class, 'dashboard'])
+        Route::get('/dashboard', [ShelvesController::class, 'index'])
             ->name('dashboard');
 
         Route::get('/books', [BookController::class, 'index'])
