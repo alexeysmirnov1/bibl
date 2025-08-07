@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enum\BookFormatEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +20,10 @@ class Book extends Model
         'format',
         'genre_id',
         'publisher_id',
+    ];
+
+    protected $casts = [
+        'format' => BookFormatEnum::class,
     ];
 
     public function genre(): BelongsTo
